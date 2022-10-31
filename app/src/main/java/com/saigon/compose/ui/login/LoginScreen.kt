@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.saigon.compose.navigate.Screen
+import com.saigon.compose.navigation.Screen
 import com.saigon.compose.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.delay
 

@@ -3,4 +3,7 @@
     <string name="nation">National</string>
     <string name="favorite">Favorite Collections</string>
     <string name="align_your_body">Align Your Body</string>
+    <string name="email_example">binhhoit@gmail.com</string>
+    <string name="name_example">Binh Ho Thanh</string>
+    <string name="image_avatar">https://lh3.googleusercontent.com/a/ALm5wu0aUjvRBWAqIhlO3bYJf5GLSAiqFSkWxe3GR99w=s192-c-mo</string>
 </resources>
