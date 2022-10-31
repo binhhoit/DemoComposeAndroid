@@ -13,11 +13,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.saigon.compose.navigate.Screen
 import com.saigon.compose.ui.theme.MyApplicationTheme
-
+import kotlinx.coroutines.delay
 
 @Composable
-fun LoginScreen(modifier: Modifier, viewModel: LoginViewModel) {
+fun LoginScreen(
+    modifier: Modifier,
+    viewModel: LoginViewModel,
+    destination: (String) -> Unit
+) {
     var username by remember { mutableStateOf("") }
     var pass by remember { mutableStateOf("") }
 
@@ -30,6 +35,10 @@ fun LoginScreen(modifier: Modifier, viewModel: LoginViewModel) {
     when {
         uiState.loginSuccess.isNotBlank() -> {
             StatusInfo(text = uiState.loginSuccess)
+            LaunchedEffect(key1 = "enterKey") {
+                delay(2000)
+                destination.invoke(Screen.home)
+            }
         }
         uiState.isLoading -> {
             Box(modifier.fillMaxSize()) {
@@ -49,39 +58,43 @@ fun LoginScreen(modifier: Modifier, viewModel: LoginViewModel) {
                         .padding(15.dp)
                         .fillMaxHeight(),
                     verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally) {
-
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     ComponentLogin(modifier = Modifier) {
-                        InputInfo(modifier = Modifier,
+                        InputInfo(
+                            modifier = Modifier,
                             "User Name",
                             Icons.Default.Person,
-                            username) {
+                            username
+                        ) {
                             username = it
                         }
                     }
                     ComponentLogin(modifier = Modifier) {
-                        InputInfo(modifier = Modifier,
+                        InputInfo(
+                            modifier = Modifier,
                             "Password",
                             Icons.Default.Lock,
-                            pass) {
+                            pass
+                        ) {
                             pass = it
                         }
                     }
                     ComponentLogin(modifier = Modifier) {
                         ButtonLogin(modifier = Modifier) {
                             Log.e("Login", "Click")
-                            if (username.isNotBlank() && pass.isNotBlank())
+                            if (username.isNotBlank() && pass.isNotBlank()) {
                                 viewModel.verifyAccountLogin(
                                     userName = username,
                                     pass = pass
                                 )
+                            }
                         }
                     }
                 }
             }
         }
     }
-
 }
 
 @Composable
@@ -97,11 +110,13 @@ fun StatusInfo(text: String) {
 }
 
 @Composable
-fun InputInfo(modifier: Modifier,
-              placeholder: String,
-              image: ImageVector,
-              value: String,
-              onValue: (String) -> Unit) {
+fun InputInfo(
+    modifier: Modifier,
+    placeholder: String,
+    image: ImageVector,
+    value: String,
+    onValue: (String) -> Unit
+) {
     OutlinedTextField(
         value = value,
         onValueChange = onValue,
@@ -121,17 +136,13 @@ fun InputInfo(modifier: Modifier,
             .fillMaxWidth()
             .heightIn(min = 56.dp)
     )
-
-
 }
 
 @Composable
 fun ButtonLogin(modifier: Modifier, onclick: () -> Unit) {
-
     Button(modifier = modifier, onClick = onclick) {
         Text(text = "Login")
     }
-
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
@@ -139,12 +150,13 @@ fun ButtonLogin(modifier: Modifier, onclick: () -> Unit) {
 fun DefaultPreview() {
     MyApplicationTheme {
         Scaffold(
-            backgroundColor = Color(0xFFF0EAE2),
+            backgroundColor = Color(0xFFF0EAE2)
         ) { padding ->
             LoginScreen(
                 modifier = Modifier.padding(padding),
                 viewModel = LoginViewModelImpl()
-            )
+            ) {
+            }
         }
     }
 }
