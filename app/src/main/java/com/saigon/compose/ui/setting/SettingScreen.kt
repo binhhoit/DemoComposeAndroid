@@ -20,65 +20,62 @@ import coil.compose.rememberAsyncImagePainter
 import com.saigon.compose.R
 import com.saigon.compose.navigation.Screen
 import com.saigon.compose.ui.theme.MyApplicationTheme
-import com.saigon.compose.utils.ScaffoldExt
 
 @Composable
 fun SettingsScreen(modifier: Modifier, destination: (String) -> Unit) {
-    ScaffoldExt(title = "Settings") {
-        Column(
-            modifier
-                .padding(15.dp)
-                .fillMaxWidth()
-        ) {
-            SectionContent(modifier = Modifier) {
-                HeaderProfile()
-            }
+    Column(
+        modifier
+            .padding(15.dp)
+            .fillMaxWidth()
+    ) {
+        SectionContent(modifier = Modifier) {
+            HeaderProfile()
+        }
 
-            SectionContent(modifier = Modifier.padding(top = 30.dp)) {
-                ItemSetting(
-                    title = "My Orders",
-                    des = "Already have 23 orders"
-                ) {
-                    destination(Screen.settingDetails)
-                }
+        SectionContent(modifier = Modifier.padding(top = 30.dp)) {
+            ItemSetting(
+                title = "My Orders",
+                des = "Already have 23 orders"
+            ) {
+                destination(Screen.settingDetails)
             }
+        }
 
-            SectionContent(modifier = Modifier) {
-                ItemSetting(title = "Payment Method", des = "Visa **** 4242") {
-                    destination(Screen.settingDetails)
-                }
+        SectionContent(modifier = Modifier) {
+            ItemSetting(title = "Payment Method", des = "Visa **** 4242") {
+                destination(Screen.settingDetails)
             }
+        }
 
-            SectionContent(modifier = Modifier) {
-                ItemSetting(
-                    title = "Shipping Address",
-                    des = "52/08/20 xxx, 12 District, HCM City, VN"
-                ) {
-                    destination(Screen.settingDetails)
-                }
+        SectionContent(modifier = Modifier) {
+            ItemSetting(
+                title = "Shipping Address",
+                des = "52/08/20 xxx, 12 District, HCM City, VN"
+            ) {
+                destination(Screen.settingDetails)
             }
+        }
 
-            SectionContent(modifier = Modifier) {
-                ItemSetting(
-                    title = "Setting",
-                    des = "Notification, password, language"
-                ) {
-                    destination(Screen.settingDetails)
-                }
+        SectionContent(modifier = Modifier) {
+            ItemSetting(
+                title = "Setting",
+                des = "Notification, password, language"
+            ) {
+                destination(Screen.settingDetails)
             }
+        }
 
-            SectionContent(modifier = Modifier) {
-                ItemSetting(
-                    title = "Change Theme",
-                    des = "Dark mode or Light mode"
-                ) {
-                }
+        SectionContent(modifier = Modifier) {
+            ItemSetting(
+                title = "Change Theme",
+                des = "Dark mode or Light mode"
+            ) {
             }
+        }
 
-            SectionContent(modifier = Modifier) {
-                LogoutButton {
-                    destination(Screen.login)
-                }
+        SectionContent(modifier = Modifier) {
+            LogoutButton {
+                destination(Screen.login)
             }
         }
     }

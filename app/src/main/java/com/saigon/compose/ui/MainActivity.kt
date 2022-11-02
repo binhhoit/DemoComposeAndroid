@@ -5,24 +5,22 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.saigon.compose.navigation.ComposeAppNavHost
 import com.saigon.compose.navigation.Screen
+import com.saigon.compose.ui.bottombar.SootheBottomNavigation
 import com.saigon.compose.ui.theme.MyApplicationTheme
+import com.saigon.compose.ui.topbar.TopBarApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +35,32 @@ class MainActivity : ComponentActivity() {
 fun AppCompose() {
     MyApplicationTheme {
         val navController = rememberNavController()
+        val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
+        val topBarState = rememberSaveable { (mutableStateOf(true)) }
+
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+        ManagerStateTopBarAndBottomBar(
+            navController = navController,
+            topBarState = topBarState,
+            bottomBarState = bottomBarState
+        )
+
         Scaffold(
             backgroundColor = Color(0xFFF0EAE2),
-            bottomBar = { SootheBottomNavigation(navController = navController) }
+            topBar = {
+                TopBarApp(
+                    navController = navController,
+                    topBarState = topBarState,
+                    title = navBackStackEntry?.destination?.route ?: ""
+                )
+            },
+            bottomBar = {
+                SootheBottomNavigation(
+                    navController = navController,
+                    bottomBarState = bottomBarState
+                )
+            }
         ) { padding ->
             ComposeAppNavHost(
                 modifier = Modifier.padding(padding),
@@ -50,61 +71,28 @@ fun AppCompose() {
 }
 
 @Composable
-private fun SootheBottomNavigation(modifier: Modifier = Modifier, navController: NavController) {
-    BottomNavigation(
-        backgroundColor = MaterialTheme.colors.background,
-        modifier = modifier
-    ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
+fun ManagerStateTopBarAndBottomBar(
+    navController: NavController,
+    bottomBarState: MutableState<Boolean>,
+    topBarState: MutableState<Boolean>
+) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
 
-        BottomNavigationItemCustom("Home",
-            navController = navController,
-            currentDestination = currentDestination,
-            iconVector = Icons.Default.Home,
-            screenDestination = Screen.home)
-
-        BottomNavigationItemCustom("Profile",
-            navController = navController,
-            currentDestination = currentDestination,
-            iconVector = Icons.Default.AccountCircle,
-            screenDestination = Screen.profile)
-
-        BottomNavigationItemCustom("Settings",
-            navController = navController,
-            currentDestination = currentDestination,
-            iconVector = Icons.Default.Settings,
-            screenDestination = Screen.setting)
-
+    // Control TopBar and BottomBar
+    when (navBackStackEntry?.destination?.route) {
+        Screen.login -> {
+            // Show BottomBar and TopBar
+            bottomBarState.value = false
+            topBarState.value = false
+        }
+        Screen.home -> {
+            bottomBarState.value = true
+            topBarState.value = false
+        }
+        else -> {
+            // Show BottomBar and TopBar
+            bottomBarState.value = true
+            topBarState.value = true
+        }
     }
 }
-
-@Composable
-fun RowScope.BottomNavigationItemCustom(title:String,
-                               navController: NavController,
-                               currentDestination: NavDestination?,
-                               iconVector: ImageVector,
-                               screenDestination: String) {
-    BottomNavigationItem(
-        icon = {
-            Icon(
-                imageVector = iconVector,
-                contentDescription = null
-            )
-        },
-        label = {
-            Text(title)
-        },
-        selected = currentDestination?.hierarchy?.any { it.route == screenDestination } == true,
-        onClick = {
-            navController.navigate(screenDestination) {
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-                launchSingleTop = true
-                restoreState = true
-            }
-        }
-    )
-}
-
