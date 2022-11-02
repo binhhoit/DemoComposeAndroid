@@ -80,12 +80,12 @@ fun ManagerStateTopBarAndBottomBar(
 
     // Control TopBar and BottomBar
     when (navBackStackEntry?.destination?.route) {
-        Screen.login -> {
+        Screen.Login.route -> {
             // Show BottomBar and TopBar
             bottomBarState.value = false
             topBarState.value = false
         }
-        Screen.home -> {
+        Screen.Home.route -> {
             bottomBarState.value = true
             topBarState.value = false
         }

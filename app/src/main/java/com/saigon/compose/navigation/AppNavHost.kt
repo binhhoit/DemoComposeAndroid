@@ -16,27 +16,28 @@ import com.saigon.compose.ui.setting.details.SettingDetailsScreen
 fun ComposeAppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = Screen.login
+    startDestination: String = Screen.Login.route
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(Screen.login) {
+        composable(Screen.Login.route) {
             LoginScreen(modifier = modifier, viewModel = LoginViewModelImpl()) {
-                navController.navigate(Screen.home)
+                navController.navigate(Screen.Login.route)
             }
         }
-        composable(Screen.home) { HomeScreen(modifier = modifier) }
+        composable(Screen.Home.route) { HomeScreen(modifier = modifier) }
 
-        composable(Screen.profile) { ProfileScreen(modifier = modifier) }
+        composable(Screen.Profile.route) { ProfileScreen(modifier = modifier) }
 
-        composable(Screen.setting) { SettingsScreen(modifier = modifier){
-            navController.navigate(it)
-        } }
+        composable(Screen.Setting.route) {
+            SettingsScreen(modifier = modifier) {
+                navController.navigate(it)
+            }
+        }
 
-        composable(Screen.settingDetails) { SettingDetailsScreen() }
-
+        composable(Screen.SettingDetails.route) { SettingDetailsScreen() }
     }
 }

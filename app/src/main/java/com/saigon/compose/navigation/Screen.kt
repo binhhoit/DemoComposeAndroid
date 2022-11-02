@@ -1,11 +1,9 @@
 package com.saigon.compose.navigation
 
-class Screen {
-    companion object {
-        const val login = "login"
-        const val home = "home"
-        const val setting = "setting"
-        const val profile = "profile"
-        const val settingDetails = "setting_details"
-    }
+sealed class Screen(val route: String) {
+    object Login : Screen("login")
+    object Home : Screen("home")
+    object Setting : Screen("setting")
+    object Profile : Screen("profile")
+    object SettingDetails : Screen("setting_details")
 }

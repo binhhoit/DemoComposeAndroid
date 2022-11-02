@@ -45,7 +45,7 @@ fun SootheBottomNavigation(
                     navController = navController,
                     currentDestination = currentDestination,
                     iconVector = Icons.Default.Home,
-                    screenDestination = Screen.home
+                    screenDestination = Screen.Home.route
                 )
 
                 BottomNavigationItemCustom(
@@ -53,7 +53,7 @@ fun SootheBottomNavigation(
                     navController = navController,
                     currentDestination = currentDestination,
                     iconVector = Icons.Default.Build,
-                    screenDestination = Screen.profile
+                    screenDestination = Screen.Profile.route
                 )
 
                 BottomNavigationItemCustom(
@@ -61,7 +61,7 @@ fun SootheBottomNavigation(
                     navController = navController,
                     currentDestination = currentDestination,
                     iconVector = Icons.Default.ShoppingCart,
-                    screenDestination = Screen.profile
+                    screenDestination = Screen.Profile.route
                 )
 
                 BottomNavigationItemCustom(
@@ -69,7 +69,7 @@ fun SootheBottomNavigation(
                     navController = navController,
                     currentDestination = currentDestination,
                     iconVector = Icons.Default.AccountCircle,
-                    screenDestination = Screen.setting
+                    screenDestination = Screen.Setting.route
                 )
             }
         }
