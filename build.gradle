@@ -2,6 +2,55 @@ buildscript {
     ext {
         compose_version = '1.1.0-beta01'
         composeNavigationVersion = '2.5.2'
+        coreLibs = '1.7.0'
+        archLifecycle = '2.2.0'
+        androidSupportLibrary = '1.6.1'
+        appcompat = "1.5.1"
+        exifinterface = '1.2.0'
+        cardView = '1.0.0'
+        constraintLayout = '2.1.4'
+        okHttp = '5.0.0-alpha.10'
+        retrofit2 = '2.9.0'
+        gson = '2.9.0'
+        autoValue = '1.4.1'
+        autoValueGson = '0.5.0'
+        roomVersion = '2.4.3'
+
+        //koin
+        koin_version = '3.2.2'
+        koin_ksp_version = '1.0.3'
+        ksp_version = '1.7.20-Beta-1.0.6'
+        kotlin_version = '1.7.10'
+
+        // FireBase
+        facebook = '[5,6)'
+        firebase = '11.8.0'
+        firebaseUI = '5.0.0'
+
+        // Instrumentation
+        leakCanary = '1.5.1'
+
+        //google
+        google = '11.8.0'
+
+        // Multidex
+        multidex = '2.0.0'
+
+        // Testing
+        junit = '4.13.2'
+        runner = '1.4.1-beta01'
+        espresso = '3.4.0'
+
+        mockitoKotlinVersion = '2.0.0-RC1'
+        mockitoVersion = '4.7.0'
+
+        powerMockVersion = '2.0.0-beta.5'
+        mockitoKotlinVersion = '2.2.0'
+        coreTestingVersion = '2.1.0'
+        espressoCoreVersion = '3.2.0'
+
+        //Log
+        timber_version = '5.0.1'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {

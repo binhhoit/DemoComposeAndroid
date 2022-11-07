@@ -37,13 +37,13 @@ fun SettingsScreen(modifier: Modifier, destination: (String) -> Unit) {
                 title = "My Orders",
                 des = "Already have 23 orders"
             ) {
-                destination(Screen.settingDetails)
+                destination(Screen.SettingDetails.route)
             }
         }
 
         SectionContent(modifier = Modifier) {
             ItemSetting(title = "Payment Method", des = "Visa **** 4242") {
-                destination(Screen.settingDetails)
+                destination(Screen.SettingDetails.route)
             }
         }
 
@@ -52,7 +52,7 @@ fun SettingsScreen(modifier: Modifier, destination: (String) -> Unit) {
                 title = "Shipping Address",
                 des = "52/08/20 xxx, 12 District, HCM City, VN"
             ) {
-                destination(Screen.settingDetails)
+                destination(Screen.SettingDetails.route)
             }
         }
 
@@ -61,7 +61,7 @@ fun SettingsScreen(modifier: Modifier, destination: (String) -> Unit) {
                 title = "Setting",
                 des = "Notification, password, language"
             ) {
-                destination(Screen.settingDetails)
+                destination(Screen.SettingDetails.route)
             }
         }
 
@@ -75,7 +75,7 @@ fun SettingsScreen(modifier: Modifier, destination: (String) -> Unit) {
 
         SectionContent(modifier = Modifier) {
             LogoutButton {
-                destination(Screen.login)
+                destination(Screen.Login.route)
             }
         }
     }

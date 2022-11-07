@@ -7,7 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.saigon.ComposeBasicDemo"
+        applicationId "com.example.swan_app"
         minSdk 33
         targetSdk 33
         versionCode 1
@@ -60,6 +60,28 @@ dependencies {
 
     implementation "androidx.navigation:navigation-compose:$rootProject.composeNavigationVersion"
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
+
+
+    // Network
+    implementation "com.squareup.retrofit2:retrofit:${retrofit2}"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofit2}"
+    implementation "com.squareup.okhttp3:okhttp:${okHttp}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${okHttp}"
+    implementation "com.github.skydoves:sandwich:1.2.4"
+
+    // Gson
+    implementation "com.google.code.gson:gson:${gson}"
+
+    // Koin for Android
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-annotations:$koin_ksp_version"
+    // Navigation Graph
+    implementation "io.insert-koin:koin-androidx-navigation:$koin_version"
+    //Log
+    implementation "com.jakewharton.timber:timber:$timber_version"
+
+    implementation platform('com.google.firebase:firebase-bom:31.0.2')
+    implementation 'com.google.firebase:firebase-database-ktx'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

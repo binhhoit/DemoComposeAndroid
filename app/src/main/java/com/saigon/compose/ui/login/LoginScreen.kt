@@ -37,7 +37,7 @@ fun LoginScreen(
             StatusInfo(text = uiState.loginSuccess)
             LaunchedEffect(key1 = "enterKey") {
                 delay(2000)
-                destination.invoke(Screen.home)
+                destination.invoke(Screen.Home.route)
             }
         }
         uiState.isLoading -> {
