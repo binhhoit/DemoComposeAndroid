@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.saigon.compose.navigation.Screen
 import com.saigon.compose.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.delay
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginScreen(
@@ -149,12 +150,13 @@ fun ButtonLogin(modifier: Modifier, onclick: () -> Unit) {
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
+        val vm:LoginViewModel = koinViewModel<LoginViewModel>()
         Scaffold(
             backgroundColor = Color(0xFFF0EAE2)
         ) { padding ->
             LoginScreen(
                 modifier = Modifier.padding(padding),
-                viewModel = LoginViewModelImpl()
+                viewModel = vm
             ) {
             }
         }

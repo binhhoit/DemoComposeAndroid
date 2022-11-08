@@ -1,16 +1,9 @@
 package com.saigon.compose.di.module
 
+import com.saigon.compose.data.repository.ProductRepository
+import com.saigon.compose.data.repository.ProductRepositoryImpl
 import org.koin.dsl.module
 
 val repositoryModule = module {
-  /*  single { SharePreferenceManager.getInstance(get()) }
-
-    single<Gson> {
-        GsonBuilder()
-            // .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
-            .setDateFormat(API_DATE_TIME_FORMAT)
-            .disableHtmlEscaping()
-            .setPrettyPrinting()
-            .create()
-    }*/
+    single<ProductRepository> { ProductRepositoryImpl(get(), get()) }
 }

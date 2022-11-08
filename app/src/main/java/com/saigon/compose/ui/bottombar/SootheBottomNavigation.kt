@@ -53,7 +53,7 @@ fun SootheBottomNavigation(
                     navController = navController,
                     currentDestination = currentDestination,
                     iconVector = Icons.Default.Build,
-                    screenDestination = Screen.Profile.route
+                    screenDestination = Screen.Shop.route
                 )
 
                 BottomNavigationItemCustom(

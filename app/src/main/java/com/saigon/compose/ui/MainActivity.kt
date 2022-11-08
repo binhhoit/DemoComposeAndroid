@@ -23,6 +23,7 @@ import com.saigon.compose.ui.theme.MyApplicationTheme
 import com.saigon.compose.ui.topbar.TopBarApp
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
