@@ -1,29 +1,23 @@
+@file:OptIn(ExperimentalGlideComposeApi::class)
+
 package com.saigon.compose.ui.shop
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
-import coil.compose.AsyncImagePainter.State.Empty.painter
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import com.saigon.compose.R
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.saigon.compose.data.model.Product
 import com.saigon.compose.ui.theme.MyApplicationTheme
 import org.koin.androidx.compose.koinViewModel
@@ -35,7 +29,7 @@ fun ShopScreen(
     destination: (String) -> Unit
 ) {
     Column(
-        modifier.fillMaxWidth()
+        modifier.fillMaxWidth().fillMaxHeight()
     ) {
         SectionContent(modifier = Modifier) {
             TabHeader(viewModel = viewModel)
@@ -88,7 +82,7 @@ fun ViewListProductCategory(viewModel: ShopViewModel) {
         else -> {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                modifier = Modifier.padding(top = 10.dp),
+                modifier = Modifier.padding(top = 5.dp, bottom = 0.dp).fillMaxHeight(),
                 contentPadding = PaddingValues(horizontal = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -119,25 +113,15 @@ fun ItemProductCollectionCard(
         Column(
             modifier = Modifier.height(320.dp)
         ) {
-           // val requestHandle = rememberAsyncImageRequestHandle()
-           /* val painter = rememberAsyncImagePainter(
-                request = ImageRequest.Builder(LocalContext.current)
-                    .data(item.thumb)
-                    //.requestHandle(requestHandle)
-                    .build()*/
-            Image(
-                painter = rememberAsyncImagePainter(item.thumb),
-                contentDescription = null,
+            GlideImage(
+                model = item.thumb,
+                contentDescription = item.thumb,
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
                     .fillMaxWidth()
                     .height(250.dp)
             )
-           /* when (val state = painter.state) {
-                is AsyncImagePainter.State.Error -> {
-                    TextButton(onClick = { requestHandle.restart() }) { Text("retry") }
-                }
-            }*/
             Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = item.subTitle ?: "",

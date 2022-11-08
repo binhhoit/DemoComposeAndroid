@@ -24,8 +24,8 @@ fun LoginScreen(
     viewModel: LoginViewModel,
     destination: (String) -> Unit
 ) {
-    var username by remember { mutableStateOf("") }
-    var pass by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("binhhoit") }
+    var pass by remember { mutableStateOf("1232") }
 
     val uiState = viewModel.loginUiState.value
 
