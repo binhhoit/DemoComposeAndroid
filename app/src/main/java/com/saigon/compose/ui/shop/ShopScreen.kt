@@ -2,6 +2,7 @@
 
 package com.saigon.compose.ui.shop
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -31,21 +32,12 @@ fun ShopScreen(
     Column(
         modifier.fillMaxWidth().fillMaxHeight()
     ) {
-        SectionContent(modifier = Modifier) {
-            TabHeader(viewModel = viewModel)
-        }
+        TabHeader(viewModel = viewModel, destination)
     }
 }
 
 @Composable
-fun SectionContent(modifier: Modifier, content: @Composable () -> Unit) {
-    Column(modifier = modifier) {
-        content()
-    }
-}
-
-@Composable
-fun TabHeader(viewModel: ShopViewModel) {
+fun TabHeader(viewModel: ShopViewModel, destination: (String) -> Unit) {
     var state by remember { mutableStateOf(0) }
     val titles = listOf("Women", "Men", "Kids")
     Column {
@@ -58,17 +50,22 @@ fun TabHeader(viewModel: ShopViewModel) {
                 Tab(
                     text = { Text(title) },
                     selected = state == index,
-                    onClick = { state = index }
+                    onClick = {
+                        state = index
+                        viewModel.getListProductCategory(titles[state].lowercase())
+                    }
                 )
             }
         }
-        ViewListProductCategory(viewModel = viewModel)
+
+        ViewListProductCategory(viewModel = viewModel, destination)
+        viewModel.getListProductCategory(titles[state].lowercase())
     }
 }
 
 @Composable
-fun ViewListProductCategory(viewModel: ShopViewModel) {
-    viewModel.getListProduct()
+fun ViewListProductCategory(viewModel: ShopViewModel, destination: (String) -> Unit) {
+    // viewModel.getListProduct()
     val state = viewModel.productState.value
     when {
         state.isLoading -> {
@@ -92,7 +89,8 @@ fun ViewListProductCategory(viewModel: ShopViewModel) {
                 ) { index ->
                     ItemProductCollectionCard(
                         modifier = Modifier,
-                        item = state.products[index]
+                        item = state.products[index],
+                        destination
                     )
                 }
             }
@@ -103,12 +101,13 @@ fun ViewListProductCategory(viewModel: ShopViewModel) {
 @Composable
 fun ItemProductCollectionCard(
     modifier: Modifier = Modifier,
-    item: Product
+    item: Product,
+    destination: (String) -> Unit
 ) {
     Surface(
         shape = MaterialTheme.shapes.large,
         color = Color.Transparent,
-        modifier = modifier
+        modifier = modifier.clickable { destination.invoke(item.id ?: "") }
     ) {
         Column(
             modifier = Modifier.height(320.dp)
@@ -144,7 +143,7 @@ fun ItemProductCollectionCard(
                 )
                 Spacer(modifier = Modifier.width(15.dp))
                 Text(
-                    text = "$${item.price.toString()}",
+                    text = "$${item.price}",
                     style = MaterialTheme.typography.body1,
                     color = Color.Red,
                     fontSize = 13.sp

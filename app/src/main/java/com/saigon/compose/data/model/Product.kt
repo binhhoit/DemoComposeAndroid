@@ -35,4 +35,7 @@ data class Product(val id: String? = null) : Serializable {
 
     @SerializedName("discount_percent")
     var discountPercent: String? = null
+
+    @SerializedName("category")
+    var category: String? = null
 }

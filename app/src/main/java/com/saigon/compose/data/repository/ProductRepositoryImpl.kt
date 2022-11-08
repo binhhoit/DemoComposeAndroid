@@ -33,9 +33,13 @@ class ProductRepositoryImpl(
         if (snapshot.hasChildren()) {
             snapshot.children.forEach { chil ->
                 if (chil.hasChildren()) {
+                    val category = chil.key as String
                     chil.children.forEach {
                         products.add(
-                            it.getValue(Product::class.java) ?: Product("null")
+                            (it.getValue(Product::class.java) ?: Product("null"))
+                                .apply {
+                                this.category = category
+                            }
                         )
                     }
                 }
