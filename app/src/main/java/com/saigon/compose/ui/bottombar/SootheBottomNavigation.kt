@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -21,6 +22,8 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.saigon.compose.navigation.Screen
+import com.saigon.compose.ui.theme.orange
+import com.saigon.compose.ui.theme.red
 
 @Composable
 fun SootheBottomNavigation(
@@ -34,14 +37,14 @@ fun SootheBottomNavigation(
         exit = slideOutVertically(targetOffsetY = { -it }),
         content = {
             BottomNavigation(
-                backgroundColor = MaterialTheme.colors.background,
+                backgroundColor = Color.White,
                 modifier = modifier
             ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
 
                 BottomNavigationItemCustom(
-                    "Home",
+                    Screen.Home.route,
                     navController = navController,
                     currentDestination = currentDestination,
                     iconVector = Icons.Default.Home,
@@ -49,7 +52,7 @@ fun SootheBottomNavigation(
                 )
 
                 BottomNavigationItemCustom(
-                    "Shop",
+                    Screen.Shop.route,
                     navController = navController,
                     currentDestination = currentDestination,
                     iconVector = Icons.Default.Build,
@@ -57,15 +60,15 @@ fun SootheBottomNavigation(
                 )
 
                 BottomNavigationItemCustom(
-                    "Cart",
+                    Screen.Cart.route,
                     navController = navController,
                     currentDestination = currentDestination,
                     iconVector = Icons.Default.ShoppingCart,
-                    screenDestination = Screen.Profile.route
+                    screenDestination = Screen.Cart.route
                 )
 
                 BottomNavigationItemCustom(
-                    "Settings",
+                    Screen.Setting.route,
                     navController = navController,
                     currentDestination = currentDestination,
                     iconVector = Icons.Default.AccountCircle,
@@ -91,6 +94,8 @@ fun RowScope.BottomNavigationItemCustom(
                 contentDescription = null
             )
         },
+        selectedContentColor = red,
+        unselectedContentColor = Color.Black,
         label = {
             Text(title)
         },

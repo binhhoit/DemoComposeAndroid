@@ -5,6 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.saigon.compose.ui.cart.CartScreen
+import com.saigon.compose.ui.cart.CartViewModel
 import com.saigon.compose.ui.home.HomeScreen
 import com.saigon.compose.ui.login.LoginScreen
 import com.saigon.compose.ui.login.LoginViewModel
@@ -19,7 +21,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ComposeAppNavHost(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     navController: NavHostController,
     startDestination: String = Screen.Login.route
 ) {
@@ -56,7 +58,14 @@ fun ComposeAppNavHost(
         composable(Screen.ProductDetails.route + "/{id}/{title}") { navBackStack ->
             val productDetailsViewModel = koinViewModel<ProductDetailsViewModel>()
             val idItem = navBackStack.arguments?.getString("id") ?: ""
-            ProductDetailScreen(viewModel = productDetailsViewModel, idItem = idItem, modifier = Modifier)
+            ProductDetailScreen(viewModel = productDetailsViewModel, idItem = idItem, modifier = modifier)
+        }
+
+        composable(Screen.Cart.route) {
+            val vm = koinViewModel<CartViewModel>()
+            CartScreen(viewModel = vm, modifier = modifier) {
+                navController.navigate(it)
+            }
         }
     }
 }

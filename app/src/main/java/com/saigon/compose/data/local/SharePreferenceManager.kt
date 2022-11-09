@@ -66,8 +66,21 @@ class SharePreferenceManager(context: Context) {
             listOf(Product())
         }
 
+        saveProductsToCart(data)
+    }
+
+    fun saveProductsToCart(products: List<Product>) {
         sharedPreferences.put {
-            putString(ADD_CART, Gson().toJson(data))
+            putString(ADD_CART, Gson().toJson(products))
+        }
+    }
+
+    suspend fun getListProductsToCart() = withContext(Dispatchers.IO) {
+        val raw = sharedPreferences.getString(ADD_CART, "")
+        try {
+            Gson().fromJson(raw, Array<Product>::class.java).toList()
+        } catch (e: Exception) {
+            listOf()
         }
     }
 }

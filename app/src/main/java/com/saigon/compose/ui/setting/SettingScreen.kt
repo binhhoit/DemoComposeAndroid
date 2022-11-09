@@ -1,6 +1,7 @@
 package com.saigon.compose.ui.setting
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -27,6 +28,7 @@ fun SettingsScreen(modifier: Modifier, destination: (String) -> Unit) {
         modifier
             .padding(15.dp)
             .fillMaxWidth()
+            .fillMaxHeight()
     ) {
         SectionContent(modifier = Modifier) {
             HeaderProfile()

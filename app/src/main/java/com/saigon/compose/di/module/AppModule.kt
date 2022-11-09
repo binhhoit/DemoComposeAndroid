@@ -3,6 +3,8 @@ package com.saigon.compose.di.module
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.saigon.compose.data.local.SharePreferenceManager
+import com.saigon.compose.ui.cart.CartViewModel
+import com.saigon.compose.ui.cart.CartViewModelImpl
 import com.saigon.compose.ui.login.LoginViewModel
 import com.saigon.compose.ui.login.LoginViewModelImpl
 import com.saigon.compose.ui.product_details.ProductDetailsViewModel
@@ -26,4 +28,5 @@ val appModule = module {
     viewModel<LoginViewModel> { LoginViewModelImpl(get()) }
     viewModel<ShopViewModel> { ShopViewModelImpl(get()) }
     viewModel<ProductDetailsViewModel> { ProductDetailsViewModelImpl(get(), get()) }
+    viewModel<CartViewModel> { CartViewModelImpl(get(), get()) }
 }

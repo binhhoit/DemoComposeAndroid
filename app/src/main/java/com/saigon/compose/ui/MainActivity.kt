@@ -62,9 +62,9 @@ fun AppCompose() {
                     bottomBarState = bottomBarState
                 )
             }
-        ) { padding ->
+        ) { _ ->
             ComposeAppNavHost(
-                modifier = Modifier.padding(padding),
+                modifier = Modifier,
                 navController = navController
             )
         }

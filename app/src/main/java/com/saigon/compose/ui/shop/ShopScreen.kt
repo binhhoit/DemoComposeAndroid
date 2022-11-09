@@ -2,12 +2,14 @@
 
 package com.saigon.compose.ui.shop
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +24,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.saigon.compose.data.model.Product
 import com.saigon.compose.navigation.Screen
 import com.saigon.compose.ui.theme.MyApplicationTheme
+import com.saigon.compose.ui.theme.red
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -31,7 +34,7 @@ fun ShopScreen(
     destination: (String) -> Unit
 ) {
     Column(
-        modifier.fillMaxWidth().fillMaxHeight()
+        modifier.fillMaxWidth().fillMaxHeight().background(color = Color.White)
     ) {
         TabHeader(viewModel = viewModel, destination)
     }
@@ -45,7 +48,14 @@ fun TabHeader(viewModel: ShopViewModel, destination: (String) -> Unit) {
         TabRow(
             selectedTabIndex = state,
             backgroundColor = Color.Black,
-            contentColor = Color.White
+            contentColor = Color.White,
+            indicator = {
+                TabRowDefaults.Indicator(
+                    modifier = Modifier.tabIndicatorOffset(it[state]),
+                    color = red,
+                    height = TabRowDefaults.IndicatorHeight * 0.5F
+                )
+            }
         ) {
             titles.forEachIndexed { index, title ->
                 Tab(
