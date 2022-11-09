@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.saigon.compose.data.model.Product
+import com.saigon.compose.navigation.Screen
 import com.saigon.compose.ui.theme.MyApplicationTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -107,7 +108,7 @@ fun ItemProductCollectionCard(
     Surface(
         shape = MaterialTheme.shapes.large,
         color = Color.Transparent,
-        modifier = modifier.clickable { destination.invoke(item.id ?: "") }
+        modifier = modifier.clickable { destination.invoke(Screen.ProductDetails.route + "/${item.id}/${item.title}") }
     ) {
         Column(
             modifier = Modifier.height(320.dp)

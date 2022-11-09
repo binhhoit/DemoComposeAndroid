@@ -6,4 +6,5 @@
     <string name="email_example">binhhoit@gmail.com</string>
     <string name="name_example">Binh Ho Thanh</string>
     <string name="image_avatar">https://lh3.googleusercontent.com/a/ALm5wu0aUjvRBWAqIhlO3bYJf5GLSAiqFSkWxe3GR99w=s192-c-mo</string>
+    <string name="add_to_bag">Add To Bag</string>
 </resources>

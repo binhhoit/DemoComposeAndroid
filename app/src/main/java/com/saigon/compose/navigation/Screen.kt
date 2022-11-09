@@ -1,10 +1,11 @@
 package com.saigon.compose.navigation
 
 sealed class Screen(val route: String) {
-    object Login : Screen("login")
-    object Home : Screen("home")
-    object Setting : Screen("setting")
-    object Profile : Screen("profile")
-    object Shop : Screen("shop")
-    object SettingDetails : Screen("setting_details")
+    object Login : Screen("Login")
+    object Home : Screen("Home")
+    object Setting : Screen("Setting")
+    object Profile : Screen("Profile")
+    object Shop : Screen("Shop")
+    object SettingDetails : Screen("Setting Details")
+    object ProductDetails : Screen("Product Details")
 }

@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import com.saigon.compose.ui.home.HomeScreen
 import com.saigon.compose.ui.login.LoginScreen
 import com.saigon.compose.ui.login.LoginViewModel
+import com.saigon.compose.ui.product_details.ProductDetailScreen
+import com.saigon.compose.ui.product_details.ProductDetailsViewModel
 import com.saigon.compose.ui.profile.ProfileScreen
 import com.saigon.compose.ui.setting.SettingsScreen
 import com.saigon.compose.ui.setting.details.SettingDetailsScreen
@@ -44,11 +46,17 @@ fun ComposeAppNavHost(
 
         composable(Screen.Shop.route) {
             val shopViewModel = koinViewModel<ShopViewModel>()
-            ShopScreen(viewModel = shopViewModel, modifier = modifier){
+            ShopScreen(viewModel = shopViewModel, modifier = modifier) {
                 navController.navigate(it)
             }
         }
 
         composable(Screen.SettingDetails.route) { SettingDetailsScreen() }
+
+        composable(Screen.ProductDetails.route + "/{id}/{title}") { navBackStack ->
+            val productDetailsViewModel = koinViewModel<ProductDetailsViewModel>()
+            val idItem = navBackStack.arguments?.getString("id") ?: ""
+            ProductDetailScreen(viewModel = productDetailsViewModel, idItem = idItem, modifier = Modifier)
+        }
     }
 }

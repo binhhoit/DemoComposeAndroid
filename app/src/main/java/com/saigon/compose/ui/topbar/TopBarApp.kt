@@ -4,15 +4,18 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.saigon.compose.navigation.Screen
 import com.saigon.compose.ui.theme.white
 
 @Composable
@@ -31,11 +34,30 @@ fun TopBarApp(
                 title = {
                     Text(
                         textAlign = TextAlign.Center,
-                        text = title,
+                        text =
+                        if (title.contains(Screen.ProductDetails.route)) {
+                            navController.currentBackStackEntry?.arguments?.getString(
+                                "title"
+                            ) ?: ""
+                        } else title,
                         color = white,
                         modifier = Modifier.fillMaxWidth(),
-                        style = MaterialTheme.typography.h5
+                        style = MaterialTheme.typography.subtitle1,
+                        fontSize = 18.sp
                     )
+                },
+                navigationIcon = if (title.contains(Screen.ProductDetails.route)) {
+                    {
+                        IconButton(onClick = { navController.popBackStack() }) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = null,
+                                tint = Color.White
+                            )
+                        }
+                    }
+                } else {
+                    null
                 }
             )
         }

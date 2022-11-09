@@ -5,8 +5,11 @@ import com.google.gson.GsonBuilder
 import com.saigon.compose.data.local.SharePreferenceManager
 import com.saigon.compose.ui.login.LoginViewModel
 import com.saigon.compose.ui.login.LoginViewModelImpl
+import com.saigon.compose.ui.product_details.ProductDetailsViewModel
+import com.saigon.compose.ui.product_details.ProductDetailsViewModelImpl
 import com.saigon.compose.ui.shop.ShopViewModel
 import com.saigon.compose.ui.shop.ShopViewModelImpl
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
@@ -20,6 +23,7 @@ val appModule = module {
             .create()
     }
 
-    single<LoginViewModel> { LoginViewModelImpl(get()) }
-    single<ShopViewModel> { ShopViewModelImpl(get()) }
+    viewModel<LoginViewModel> { LoginViewModelImpl(get()) }
+    viewModel<ShopViewModel> { ShopViewModelImpl(get()) }
+    viewModel<ProductDetailsViewModel> { ProductDetailsViewModelImpl(get(), get()) }
 }
