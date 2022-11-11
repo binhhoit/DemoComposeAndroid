@@ -10,6 +10,8 @@ import com.saigon.compose.ui.cart.CartViewModel
 import com.saigon.compose.ui.home.HomeScreen
 import com.saigon.compose.ui.login.LoginScreen
 import com.saigon.compose.ui.login.LoginViewModel
+import com.saigon.compose.ui.payment.method.PaymentMethodViewModel
+import com.saigon.compose.ui.payment.method.PaymentMethodsScreen
 import com.saigon.compose.ui.product_details.ProductDetailScreen
 import com.saigon.compose.ui.product_details.ProductDetailsViewModel
 import com.saigon.compose.ui.profile.ProfileScreen
@@ -65,6 +67,12 @@ fun ComposeAppNavHost(
             val vm = koinViewModel<CartViewModel>()
             CartScreen(viewModel = vm, modifier = modifier) {
                 navController.navigate(it)
+            }
+        }
+
+        composable(Screen.PaymentMethod.route) {
+            val vm = koinViewModel<PaymentMethodViewModel>()
+            PaymentMethodsScreen(viewModel = vm, modifier = modifier) {
             }
         }
     }

@@ -69,7 +69,10 @@ fun BodyCart(
             }
         }
         ButtonCheckout(
-            onClick = { viewModel.clearDataCart() },
+            onClick = {
+                viewModel.clearDataCart()
+                destination.invoke(Screen.PaymentMethod.route)
+                      },
             totalPrice = result.priceTotal,
             modifier.align(alignment = Alignment.BottomCenter)
         )

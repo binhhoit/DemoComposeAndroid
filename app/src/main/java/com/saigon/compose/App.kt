@@ -6,6 +6,7 @@ import com.saigon.compose.data.firebase.firebaseModule
 import com.saigon.compose.di.module.appModule
 import com.saigon.compose.di.module.networkModule
 import com.saigon.compose.di.module.repositoryModule
+import com.saigon.compose.di.module.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
@@ -28,6 +29,7 @@ class App : Application() {
             androidContext(this@App)
             androidFileProperties()
             modules(appModule)
+            modules(viewModelModule)
             modules(networkModule)
             modules(repositoryModule)
             modules(firebaseModule)
