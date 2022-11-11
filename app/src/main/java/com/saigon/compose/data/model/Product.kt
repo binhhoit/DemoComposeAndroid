@@ -38,4 +38,7 @@ data class Product(val id: String? = null) : Serializable {
 
     @SerializedName("category")
     var category: String? = null
+
+    @SerializedName("count")
+    var count: Int = 1
 }

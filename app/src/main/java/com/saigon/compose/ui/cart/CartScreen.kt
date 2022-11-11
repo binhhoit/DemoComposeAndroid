@@ -40,7 +40,8 @@ fun CartScreen(
     destination: (String) -> Unit
 ) {
     BodyCart(
-        modifier = modifier.padding(bottom = 50.dp)
+        modifier = modifier
+            .padding(bottom = 50.dp)
             .background(Color.White),
         viewModel = viewModel,
         destination = destination
@@ -56,18 +57,20 @@ fun BodyCart(
     val result = viewModel.productState.value
     Box {
         LazyColumn(
-            modifier = modifier.fillMaxWidth().fillMaxHeight()
+            modifier = modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
                 .padding(bottom = 70.dp),
             verticalArrangement = Arrangement.spacedBy(5.dp),
             contentPadding = PaddingValues(5.dp)
         ) {
             items(result.products.size) { index ->
-                ItemCart(item = result.products[index],destination)
+                ItemCart(item = result.products[index], viewModel, destination)
             }
         }
         ButtonCheckout(
             onClick = { viewModel.clearDataCart() },
-            totalPrice = 0,
+            totalPrice = result.priceTotal,
             modifier.align(alignment = Alignment.BottomCenter)
         )
     }
@@ -76,11 +79,13 @@ fun BodyCart(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ItemCart(item: Product, destination: (String) -> Unit) {
+fun ItemCart(item: Product, viewModel: CartViewModel, destination: (String) -> Unit) {
     Card(
         shape = RoundedCornerShape(5.dp),
         backgroundColor = Color.White,
-        modifier = Modifier.height(100.dp).fillMaxWidth(),
+        modifier = Modifier
+            .height(100.dp)
+            .fillMaxWidth(),
         elevation = 2.dp,
         onClick = { destination.invoke(Screen.ProductDetails.route + "/${item.id}/${item.title}") }
     ) {
@@ -94,18 +99,21 @@ fun ItemCart(item: Product, destination: (String) -> Unit) {
                     .fillMaxHeight()
                     .width(100.dp)
             )
-            ContentItemCart(item = item)
+            ContentItemCart(item = item, viewModel)
             OptionAndPrice(item = item)
         }
     }
 }
 
 @Composable
-fun ContentItemCart(item: Product) {
+fun ContentItemCart(item: Product, viewModel: CartViewModel) {
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.Start,
-        modifier = Modifier.fillMaxHeight().padding(top = 15.dp).fillMaxWidth(0.75f)
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(top = 15.dp)
+            .fillMaxWidth(0.75f)
     ) {
         Text(
             text = item.title ?: "",
@@ -117,7 +125,7 @@ fun ContentItemCart(item: Product) {
             fontSize = 12.sp
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { viewModel.removeProductAddToCart(item) }) {
                 Icon(
                     imageVector = Icons.Default.ArrowDropDown,
                     contentDescription = "add",
@@ -128,7 +136,7 @@ fun ContentItemCart(item: Product) {
                 )
             }
             Text(
-                text = "0",
+                text = item.count.toString(),
                 style = TextStyle(
                     fontWeight = FontWeight.Light,
                     fontFamily = FontFamily.Monospace
@@ -137,7 +145,7 @@ fun ContentItemCart(item: Product) {
                 fontSize = 13.sp,
                 modifier = Modifier.padding(horizontal = 15.dp)
             )
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { viewModel.addProductAddToCart(item) }) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "add",
@@ -156,7 +164,9 @@ fun OptionAndPrice(item: Product) {
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.End,
-        modifier = Modifier.fillMaxHeight().padding(bottom = 10.dp)
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(bottom = 10.dp)
     ) {
         IconButton(onClick = { /*TODO*/ }) {
             Icon(
@@ -166,7 +176,7 @@ fun OptionAndPrice(item: Product) {
             )
         }
         Text(
-            text = "$" + item.price.toString(),
+            text = "$" + ((item.price ?: 0) * item.count).toString(),
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Monospace
