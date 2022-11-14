@@ -3,8 +3,10 @@ package com.saigon.compose.data.local
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.saigon.compose.data.model.DashboardData
 import com.saigon.compose.data.model.Product
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 class SharePreferenceManager(context: Context) {
@@ -12,6 +14,7 @@ class SharePreferenceManager(context: Context) {
         private const val SHARED_PREF_NAME = "shared_pref"
         private const val PRODUCT_KEY = "product_key"
         private const val ADD_CART = "add_cart"
+        private const val DASHBOARD_KEY = "dashboard_key"
 
         // For Singleton instantiation
         @Volatile
@@ -25,6 +28,8 @@ class SharePreferenceManager(context: Context) {
             }
         }
     }
+
+    private var loadDashboard = false
 
     private val sharedPreferences by lazy(LazyThreadSafetyMode.NONE) {
         context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
@@ -81,6 +86,28 @@ class SharePreferenceManager(context: Context) {
             Gson().fromJson(raw, Array<Product>::class.java).toList()
         } catch (e: Exception) {
             listOf()
+        }
+    }
+
+    fun saveDataDashboard(data: String) = sharedPreferences.put {
+        putString(DASHBOARD_KEY, data)
+        loadDashboard = true
+    }
+
+    suspend fun getDataDashboard(): DashboardData = withContext(Dispatchers.IO) {
+        val raw = sharedPreferences.getString(DASHBOARD_KEY, "")
+        while (!loadDashboard && raw!!.isBlank()){
+            delay(2000)
+            getProductsData()
+        }
+        try {
+            Gson().fromJson(raw, DashboardData::class.java)
+        } catch (e: Exception) {
+            DashboardData(
+                newProducts = listOf(),
+                saleProducts = listOf(),
+                Product()
+            )
         }
     }
 }

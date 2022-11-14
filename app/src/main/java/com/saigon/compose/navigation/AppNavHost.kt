@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.saigon.compose.ui.cart.CartScreen
 import com.saigon.compose.ui.cart.CartViewModel
 import com.saigon.compose.ui.home.HomeScreen
+import com.saigon.compose.ui.home.HomeViewModel
 import com.saigon.compose.ui.login.LoginScreen
 import com.saigon.compose.ui.login.LoginViewModel
 import com.saigon.compose.ui.payment.method.PaymentMethodViewModel
@@ -38,7 +39,13 @@ fun ComposeAppNavHost(
                 navController.navigate(it)
             }
         }
-        composable(Screen.Home.route) { HomeScreen(modifier = modifier) }
+
+        composable(Screen.Home.route) {
+            val vm = koinViewModel<HomeViewModel>()
+            HomeScreen(modifier = modifier, viewModel = vm) {
+                navController.navigate(it)
+            }
+        }
 
         composable(Screen.Profile.route) { ProfileScreen(modifier = modifier) }
 

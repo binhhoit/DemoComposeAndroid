@@ -28,7 +28,7 @@ data class Product(val id: String? = null) : Serializable {
     var price: Int? = null
 
     @SerializedName("rating")
-    var rating: Int? = null
+    var rating: Float? = null
 
     @SerializedName("description")
     var description: String? = null
@@ -38,6 +38,9 @@ data class Product(val id: String? = null) : Serializable {
 
     @SerializedName("category")
     var category: String? = null
+
+    @SerializedName("cover_mage")
+    var coverMage: String? = null
 
     @SerializedName("count")
     var count: Int = 1

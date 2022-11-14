@@ -95,7 +95,7 @@ fun BodyPaymentMethods(paymentMethods: PaymentMethods) {
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ItemCard(paymentMethod: PaymentMethodCustomer) {
-    var expanded by remember { mutableStateOf(mutableStateOf(false)) }
+    val expanded by remember { mutableStateOf(mutableStateOf(false)) }
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,

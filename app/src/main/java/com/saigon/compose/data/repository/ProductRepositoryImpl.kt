@@ -6,6 +6,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.saigon.compose.data.local.SharePreferenceManager
+import com.saigon.compose.data.model.DashboardData
 import com.saigon.compose.data.model.Product
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -26,6 +27,17 @@ class ProductRepositoryImpl(
                 throw Exception(error.message)
             }
         })
+
+        val refDashboard = database.getReference("/dashboard")
+        refDashboard.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                handleDataDashboard(snapshot)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                throw Exception(error.message)
+            }
+        })
     }
 
     private fun handleDataProducts(snapshot: DataSnapshot) {
@@ -38,8 +50,8 @@ class ProductRepositoryImpl(
                         products.add(
                             (it.getValue(Product::class.java) ?: Product("null"))
                                 .apply {
-                                this.category = category
-                            }
+                                    this.category = category
+                                }
                         )
                     }
                 }
@@ -48,7 +60,12 @@ class ProductRepositoryImpl(
         localSharePreferenceManager.saveProductsData(Gson().toJson(products))
     }
 
-    override suspend fun getProducts() = withContext(Dispatchers.IO) {
-        localSharePreferenceManager.getProductsData()
+    private fun handleDataDashboard(snapshot: DataSnapshot) {
+        val data = snapshot.getValue(Any::class.java)
+        localSharePreferenceManager.saveDataDashboard(Gson().toJson(data))
     }
+
+    override suspend fun getProducts() = localSharePreferenceManager.getProductsData()
+
+    override suspend fun getDashboard(): DashboardData = localSharePreferenceManager.getDataDashboard()
 }

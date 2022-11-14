@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.saigon.compose.navigation.ComposeAppNavHost
 import com.saigon.compose.navigation.Screen
 import com.saigon.compose.ui.bottombar.SootheBottomNavigation
@@ -48,7 +49,7 @@ fun AppCompose() {
         )
 
         Scaffold(
-            backgroundColor = Color(0xFFF0EAE2),
+            backgroundColor = Color.White,
             topBar = {
                 TopBarApp(
                     navController = navController,
@@ -78,6 +79,7 @@ fun ManagerStateTopBarAndBottomBar(
     topBarState: MutableState<Boolean>
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val system = rememberSystemUiController()
 
     // Control TopBar and BottomBar
     when (navBackStackEntry?.destination?.route) {
@@ -85,15 +87,21 @@ fun ManagerStateTopBarAndBottomBar(
             // Show BottomBar and TopBar
             bottomBarState.value = false
             topBarState.value = false
+            //system.isStatusBarVisible = true
+            system.setStatusBarColor(color = Color.Transparent)
         }
         Screen.Home.route -> {
             bottomBarState.value = true
             topBarState.value = false
+            //system.isStatusBarVisible = false
+           // system.statusBarDarkContentEnabled = true
         }
         else -> {
             // Show BottomBar and TopBar
             bottomBarState.value = true
             topBarState.value = true
+            //system.isStatusBarVisible = true
+            system.setStatusBarColor(color = Color.Black)
         }
     }
 }

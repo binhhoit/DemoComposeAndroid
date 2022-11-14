@@ -2,6 +2,8 @@ package com.saigon.compose.di.module
 
 import com.saigon.compose.ui.cart.CartViewModel
 import com.saigon.compose.ui.cart.CartViewModelImpl
+import com.saigon.compose.ui.home.HomeViewModel
+import com.saigon.compose.ui.home.HomeViewModelImpl
 import com.saigon.compose.ui.login.LoginViewModel
 import com.saigon.compose.ui.login.LoginViewModelImpl
 import com.saigon.compose.ui.payment.method.PaymentMethodViewModel
@@ -19,4 +21,5 @@ val viewModelModule = module {
     viewModel<ProductDetailsViewModel> { ProductDetailsViewModelImpl(get(), get()) }
     viewModel<CartViewModel> { CartViewModelImpl(get(), get()) }
     viewModel<PaymentMethodViewModel> { PaymentMethodViewModelImpl(get()) }
+    viewModel<HomeViewModel> { HomeViewModelImpl(get()) }
 }

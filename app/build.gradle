@@ -92,6 +92,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:21.1.1'
     implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'com.google.accompanist:accompanist-pager:0.27.0'
+    //layout
+    implementation 'androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha04'
+    //systemUI
+    implementation 'com.google.accompanist:accompanist-systemuicontroller:0.27.0'
 
 
     testImplementation 'junit:junit:4.13.2'

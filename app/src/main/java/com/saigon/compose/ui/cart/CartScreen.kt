@@ -12,15 +12,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -34,7 +31,6 @@ import com.saigon.compose.data.model.Product
 import com.saigon.compose.navigation.Screen
 import com.saigon.compose.ui.theme.MyApplicationTheme
 import org.koin.androidx.compose.koinViewModel
-import org.koin.core.context.GlobalContext
 
 @Composable
 fun CartScreen(
@@ -46,7 +42,7 @@ fun CartScreen(
         modifier = modifier
             .padding(bottom = 50.dp)
             .background(Color.White),
-        //viewModel = viewModel,
+        viewModel = viewModel,
         destination = destination
     )
 }
@@ -54,9 +50,9 @@ fun CartScreen(
 @Composable
 fun BodyCart(
     modifier: Modifier,
+    viewModel: CartViewModel,
     destination: (String) -> Unit
 ) {
-    val viewModel = koinViewModel<CartViewModel>()
     val result = viewModel.productState.value
     Box {
         LazyColumn(
@@ -167,6 +163,7 @@ fun ContentItemCart(item: Product, viewModel: CartViewModel) {
 
 @Composable
 fun OptionAndPrice(item: Product) {
+    val expanded by remember { mutableStateOf(mutableStateOf(false)) }
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.End,
@@ -174,12 +171,14 @@ fun OptionAndPrice(item: Product) {
             .fillMaxHeight()
             .padding(bottom = 10.dp)
     ) {
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = { expanded.value = true }) {
             Icon(
                 imageVector = Icons.Default.MoreVert,
                 contentDescription = "option",
                 tint = Color.LightGray
             )
+
+            PopupOption(expanded = expanded)
         }
         Text(
             text = "$" + ((item.price ?: 0) * item.count).toString(),
@@ -191,6 +190,18 @@ fun OptionAndPrice(item: Product) {
             fontSize = 18.sp,
             modifier = Modifier.padding(horizontal = 10.dp)
         )
+    }
+}
+
+@Composable
+fun PopupOption(expanded: MutableState<Boolean>) {
+    DropdownMenu(
+        expanded = expanded.value,
+        onDismissRequest = { expanded.value = false }
+    ) {
+        DropdownMenuItem(onClick = { /* Handle refresh! */ }) {
+            Text("Remove")
+        }
     }
 }
 
@@ -213,7 +224,7 @@ fun ButtonCheckout(onClick: () -> Unit, totalPrice: Int, modifier: Modifier) {
         }
     ) {
         Text(
-            text = "Checkout $$totalPrice".uppercase(),
+            text = "Checkout $${totalPrice.toFloat()}".uppercase(),
             color = Color.LightGray,
             style = TextStyle(
                 fontWeight = FontWeight.Light,
