@@ -140,7 +140,7 @@ fun ItemCard(paymentMethod: PaymentMethodCustomer) {
             tint = Color.LightGray
         )
 
-        IconButton(onClick = { expanded = mutableStateOf(true)}) {
+        IconButton(onClick = { /*TODO*/ }) {
             Icon(
                 imageVector = Icons.Default.MoreVert,
                 contentDescription = null,

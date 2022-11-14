@@ -20,18 +20,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.saigon.compose.data.model.Product
 import com.saigon.compose.navigation.Screen
 import com.saigon.compose.ui.theme.MyApplicationTheme
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.context.GlobalContext
 
 @Composable
 fun CartScreen(
@@ -43,7 +46,7 @@ fun CartScreen(
         modifier = modifier
             .padding(bottom = 50.dp)
             .background(Color.White),
-        viewModel = viewModel,
+        //viewModel = viewModel,
         destination = destination
     )
 }
@@ -51,9 +54,9 @@ fun CartScreen(
 @Composable
 fun BodyCart(
     modifier: Modifier,
-    viewModel: CartViewModel,
     destination: (String) -> Unit
 ) {
+    val viewModel = koinViewModel<CartViewModel>()
     val result = viewModel.productState.value
     Box {
         LazyColumn(
@@ -72,7 +75,7 @@ fun BodyCart(
             onClick = {
                 viewModel.clearDataCart()
                 destination.invoke(Screen.PaymentMethod.route)
-                      },
+            },
             totalPrice = result.priceTotal,
             modifier.align(alignment = Alignment.BottomCenter)
         )

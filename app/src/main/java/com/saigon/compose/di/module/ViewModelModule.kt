@@ -17,6 +17,6 @@ val viewModelModule = module {
     viewModel<LoginViewModel> { LoginViewModelImpl(get()) }
     viewModel<ShopViewModel> { ShopViewModelImpl(get()) }
     viewModel<ProductDetailsViewModel> { ProductDetailsViewModelImpl(get(), get()) }
-    viewModel<CartViewModel> { CartViewModelImpl(get(), get(), get()) }
+    viewModel<CartViewModel> { CartViewModelImpl(get(), get()) }
     viewModel<PaymentMethodViewModel> { PaymentMethodViewModelImpl(get()) }
 }

@@ -10,5 +10,4 @@ abstract class CartViewModel : ViewModel() {
     abstract fun removeProductAddToCart(item: Product)
     abstract fun clearDataCart()
     abstract fun addProductAddToCart(item: Product)
-    abstract fun callDemoNetWork()
 }
