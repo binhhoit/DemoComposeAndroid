@@ -1,7 +1,6 @@
 package com.saigon.compose.ui.setting
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -9,10 +8,13 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,6 +23,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.saigon.compose.R
 import com.saigon.compose.navigation.Screen
 import com.saigon.compose.ui.theme.MyApplicationTheme
+import com.saigon.compose.utils.LocaleUtils
+import java.util.*
 
 @Composable
 fun SettingsScreen(modifier: Modifier, destination: (String) -> Unit) {
@@ -68,7 +72,7 @@ fun SettingsScreen(modifier: Modifier, destination: (String) -> Unit) {
         }
 
         SectionContent(modifier = Modifier) {
-            ItemSetting(
+            ItemSwitchSetting(
                 title = "Change Theme",
                 des = "Dark mode or Light mode"
             ) {
@@ -108,12 +112,12 @@ fun HeaderProfile() {
             Text(
                 text = stringResource(R.string.name_example),
                 style = MaterialTheme.typography.subtitle2,
-                fontSize = 18.sp
+                fontSize = 13.sp
             )
             Text(
                 text = stringResource(R.string.email_example),
                 style = MaterialTheme.typography.body2,
-                fontSize = 18.sp
+                fontSize = 10.sp
             )
         }
     }
@@ -138,10 +142,10 @@ fun LogoutButton(onClick: () -> Unit) {
             onClick = onClick
         ) {
             Text(
-                text = "Log Out",
+                text = stringResource(R.string.log_out),
                 color = Color.White,
                 style = MaterialTheme.typography.button,
-                fontSize = 18.sp
+                fontSize = 13.sp
             )
         }
     }
@@ -160,15 +164,14 @@ fun ItemSetting(title: String, des: String, onClick: () -> Unit) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.subtitle2,
-                fontSize = 16.sp
+                fontSize = 13.sp
             )
             Text(
                 text = des,
                 style = MaterialTheme.typography.body2,
-                fontSize = 13.sp
+                fontSize = 10.sp
             )
         }
-
         IconButton(
             onClick = onClick
         ) {
@@ -177,6 +180,44 @@ fun ItemSetting(title: String, des: String, onClick: () -> Unit) {
                 contentDescription = null,
                 tint = Color.Gray
             )
+        }
+    }
+
+    Divider(color = Color.Gray, thickness = 0.5.dp)
+}
+
+@Composable
+fun ItemSwitchSetting(title: String, des: String, onClick: () -> Unit) {
+    val context = LocalContext.current
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .padding(top = 5.dp, bottom = 5.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.subtitle2,
+                fontSize = 13.sp
+            )
+            Text(
+                text = des,
+                style = MaterialTheme.typography.body2,
+                fontSize = 10.sp
+            )
+        }
+        val checkedState = remember { mutableStateOf(true) }
+        Switch(
+            checked = checkedState.value,
+            onCheckedChange = { checkedState.value = it }
+        )
+
+        if (checkedState.value) {
+            LocaleUtils.updateResources(context, "en")
+        } else {
+            LocaleUtils.updateResources(context, "vn")
         }
     }
 

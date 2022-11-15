@@ -15,6 +15,7 @@ class SharePreferenceManager(context: Context) {
         private const val PRODUCT_KEY = "product_key"
         private const val ADD_CART = "add_cart"
         private const val DASHBOARD_KEY = "dashboard_key"
+        private const val LANGUAGE_KEY = "language"
 
         // For Singleton instantiation
         @Volatile
@@ -110,4 +111,12 @@ class SharePreferenceManager(context: Context) {
             )
         }
     }
+
+    fun changeAppLanguage(languageISO: String) {
+        sharedPreferences.put {
+            putString(LANGUAGE_KEY, languageISO).apply()
+        }
+    }
+
+    fun language() = sharedPreferences.getString(LANGUAGE_KEY,"en")
 }
