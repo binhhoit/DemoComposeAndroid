@@ -86,20 +86,25 @@ fun ManagerStateTopBarAndBottomBar(
             bottomBarState.value = false
             topBarState.value = false
             //system.isStatusBarVisible = true
-            system.setStatusBarColor(color = Color.Transparent)
+            system.setStatusBarColor(color = Color.White)
         }
         Screen.Home.route -> {
             bottomBarState.value = true
             topBarState.value = false
             //system.isStatusBarVisible = false
-           // system.statusBarDarkContentEnabled = true
+            system.setStatusBarColor(color = Color.Transparent)
         }
         else -> {
-            // Show BottomBar and TopBar
-            bottomBarState.value = true
-            topBarState.value = true
-            //system.isStatusBarVisible = true
-            system.setStatusBarColor(color = Color.Black)
+            if (navBackStackEntry?.destination?.route.isNullOrBlank()) {
+                bottomBarState.value = false
+                topBarState.value = false
+            } else {
+                // Show BottomBar and TopBar
+                bottomBarState.value = true
+                topBarState.value = true
+                system.isStatusBarVisible = true
+                system.setStatusBarColor(color = Color.Black)
+            }
         }
     }
 }
