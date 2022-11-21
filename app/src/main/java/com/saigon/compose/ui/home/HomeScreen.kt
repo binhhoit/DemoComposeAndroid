@@ -162,7 +162,7 @@ fun NewProducts(products: List<Product>, destination: (String) -> Unit) {
     val pagerState = rememberPagerState()
     TitleSectionHome("New", "you 're never sale it before!")
     if (products.isNotEmpty()) {
-        ConstraintLayout() {
+        ConstraintLayout {
             val indicator = createRef()
             HorizontalPager(
                 count = products.size,

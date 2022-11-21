@@ -1,0 +1,156 @@
+{
+  Transitions: {
+    default: {
+      from: 'start',
+      to: 'end',
+      duration: 2000,
+      pathMotionArc: 'startVertical',
+      onSwipe : {
+        anchor: "bgIsland",
+      }
+    }
+  },
+  ConstraintSets: {
+    start: {
+      bgIsland: {
+        height: 40,
+        width: 250,
+        start: ['parent', 'start', 0],
+        end: ['parent', 'end', 0],
+        top: ['parent', 'top', 50],
+        custom :{
+          border : 40
+        }
+      },
+      icPhone: {
+        height: 30,
+        width: 30,
+        start: ['bgIsland', 'start', 15],
+        bottom: ['bgIsland', 'bottom', 0],
+        top: ['bgIsland', 'top', 0]
+      },
+      tvHour: {
+        height: "wrap",
+        width: "wrap",
+        start: ['bgIsland', 'start', 0],
+        end: ['bgIsland', 'end', 0],
+        bottom: ['bgIsland', 'bottom', 0],
+        top: ['bgIsland', 'top', 0]
+      },
+      icMic: {
+        height: 30,
+        width: 30,
+        end: ['bgIsland', 'end', 15],
+        bottom: ['bgIsland', 'bottom', 0],
+        top: ['bgIsland', 'top', 0]
+      },
+      ivAvatar: {
+        height: "wrap",
+        width: 0,
+        alpha: 0,
+        start: ['bgIsland', 'start', 15],
+        top: ['bgIsland', 'top', 0],
+        bottom: ['bgIsland', 'bottom', 0],
+      },
+      tvName: {
+        height: "wrap",
+        width: 0,
+        alpha: 0,
+        start: ['ivAvatar', 'end', 0],
+        end: ['icPhoneActive', 'start', 0],
+        top: ['bgIsland', 'top', 0],
+        bottom: ['bgIsland', 'bottom', 0]
+      },
+      icPhoneActive: {
+        height: "wrap",
+        width: 0,
+        alpha: 0,
+        start: ['tvName', 'end', 0],
+        end: ['icPhoneInactive', 'start', 0],
+        top: ['bgIsland', 'top', 0],
+        bottom: ['bgIsland', 'bottom', 0]
+      },
+      icPhoneInactive: {
+        height: "wrap",
+        width: 0,
+        alpha: 0,
+        start: ['icPhoneActive', 'end', 0],
+        end: ['bgIsland', 'end', 0],
+        top: ['bgIsland', 'top', 0],
+        bottom: ['bgIsland', 'bottom', 0]
+      }
+    },
+    end: {
+      bgIsland: {
+        height: 70,
+        width: 300,
+        start: ['parent', 'start', 0],
+        end: ['parent', 'end', 0],
+        top: ['parent', 'top', 50],
+        custom :{
+          border : 45
+        }
+      },
+      icPhone: {
+        height: 40,
+        width: 40,
+        start: ['bgIsland', 'start', 0],
+        bottom: ['bgIsland', 'bottom', 0],
+        top: ['bgIsland', 'top', 0],
+        alpha: 0
+      },
+      tvHour: {
+        height: 40,
+        width: 40,
+        start: ['bgIsland', 'start', 0],
+        end: ['bgIsland', 'end', 0],
+        bottom: ['bgIsland', 'bottom', 0],
+        top: ['bgIsland', 'top', 0],
+        alpha: 0
+      },
+      icMic: {
+        height: 40,
+        width: 40,
+        end: ['bgIsland', 'end', 0],
+        bottom: ['bgIsland', 'bottom', 0],
+        top: ['bgIsland', 'top', 0],
+        alpha: 0
+      },
+      ivAvatar: {
+        height: 55,
+        width: 55,
+        alpha: 1,
+        start: ['bgIsland', 'start', 15],
+        top: ['bgIsland', 'top', 0],
+        bottom: ['bgIsland', 'bottom', 0],
+      },
+      tvName: {
+        height: "wrap",
+        width: "wrap",
+        alpha: 1,
+        start: ['ivAvatar', 'end', 0],
+        end: ['icPhoneActive', 'start', 0],
+        top: ['bgIsland', 'top', 0],
+        bottom: ['bgIsland', 'bottom', 0]
+      },
+      icPhoneActive: {
+        height: "wrap",
+        width: "wrap",
+        alpha: 1,
+        start: ['tvName', 'end', 0],
+        end: ['icPhoneInactive', 'start', 0],
+        top: ['bgIsland', 'top', 0],
+        bottom: ['bgIsland', 'bottom', 0]
+      },
+      icPhoneInactive: {
+        height: "wrap",
+        width: "wrap",
+        alpha: 1,
+        start: ['icPhoneActive', 'end', 0],
+        end: ['bgIsland', 'end', 0],
+        top: ['bgIsland', 'top', 0],
+        bottom: ['bgIsland', 'bottom', 0]
+      }
+    }
+  }
+}
