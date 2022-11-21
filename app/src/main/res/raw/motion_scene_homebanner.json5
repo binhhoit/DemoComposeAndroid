@@ -1,0 +1,54 @@
+{
+  Transitions: {
+    default: {
+      from: 'start',
+      to: 'end',
+      pathMotionArc: 'startHorizontal'
+    }
+  },
+
+  ConstraintSets: {
+    start: {
+      ivBanner: {
+        width: "spread",
+        height: 600,
+        top: ['parent', 'top', 0],
+        start: ['parent', 'start', 0],
+        end: ['parent', 'end', 0],
+      },
+      tvTitle: {
+        width: "wrap",
+        height: "wrap",
+        bottom: ['btnBanner', 'top', 15],
+        start: ['btnBanner', 'start', 0],
+      },
+      btnBanner: {
+        width: 150,
+        height: 40,
+        bottom: ['parent', 'bottom', 20],
+        start: ['parent', 'start', 15]
+      }
+    },
+    end: {
+      ivBanner: {
+        width: "spread",
+        height: 150,
+        top: ['parent', 'top', 0],
+        start: ['parent', 'start', 0],
+        end: ['parent', 'end', 0],
+      },
+      tvTitle: {
+        width: "wrap",
+        height: "wrap",
+        bottom: ['btnBanner', 'top', 15],
+        start: ['btnBanner', 'start', 0]
+      },
+      btnBanner: {
+        width: 150,
+        height: 40,
+        bottom: ['parent', 'bottom', 20],
+        start: ['parent', 'start', 15],
+      }
+    }
+  }
+}

@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -22,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.*
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -35,6 +37,8 @@ import com.saigon.compose.navigation.Screen
 import com.saigon.compose.ui.theme.MyApplicationTheme
 import com.saigon.compose.ui.theme.red
 import org.koin.androidx.compose.koinViewModel
+import timber.log.Timber
+import java.util.*
 
 @Composable
 fun HomeScreen(
@@ -69,35 +73,39 @@ fun HomeScreen(
                     result.data?.newProducts ?: listOf(),
                     destination = destination
                 )
+                Spacer(modifier = Modifier.height(150.dp))
             }
         }
     }
     viewModel.getDashboard()
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
+@OptIn(ExperimentalGlideComposeApi::class, ExperimentalMotionApi::class)
 @Composable
 fun BannerHomePage(promotion: Product, valueScroll: Int) {
-    val min = 400 - valueScroll
-    val resize = if (min >= 250) {
-        min
-    } else {
-        250
+    val context = LocalContext.current
+    val motionScene = remember {
+        context.resources
+            .openRawResource(R.raw.motion_scene_homebanner)
+            .readBytes()
+            .decodeToString()
     }
 
-    ConstraintLayout(modifier = Modifier.height(resize.dp)) {
-        val (title, button, _) = createRefs()
+    Timber.e("progress = ${(valueScroll / 1000f)}")
+    MotionLayout(
+        motionScene = MotionScene(content = motionScene),
+        modifier = Modifier.fillMaxWidth(),
+        debug = EnumSet.of(MotionLayoutDebugFlags.SHOW_ALL),
+        progress = (valueScroll / 1000f)
+    ) {
         GlideImage(
             model = promotion.coverMage,
             contentDescription = promotion.coverMage,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().layoutId("ivBanner")
         )
         Text(
-            modifier = Modifier.constrainAs(title) {
-                bottom.linkTo(button.top)
-                start.linkTo(button.start)
-            },
+            modifier = Modifier.layoutId("tvTitle"),
             text = "Fashion\nSale",
             color = Color.White,
             style = TextStyle(
@@ -108,11 +116,9 @@ fun BannerHomePage(promotion: Product, valueScroll: Int) {
         )
 
         Button(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.constrainAs(button) {
-                bottom.linkTo(parent.bottom, margin = 15.dp)
-                start.linkTo(parent.start, margin = 15.dp)
+            onClick = {
             },
+            modifier = Modifier.layoutId("btnBanner"),
             colors = ButtonDefaults.textButtonColors(
                 backgroundColor = Color.Red,
                 contentColor = Color.White
