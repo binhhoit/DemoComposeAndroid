@@ -60,7 +60,7 @@ fun ScreenDemoDynamicIsland() {
             MotionLayout(
                 motionScene = MotionScene(content = motionScene),
                 modifier = Modifier.fillMaxWidth(),
-                debug = EnumSet.of(MotionLayoutDebugFlags.UNKNOWN),
+                debug = EnumSet.of(MotionLayoutDebugFlags.NONE),
                 progress = progress
             ) {
                 val properties = motionProperties(id = "bgIsland")
